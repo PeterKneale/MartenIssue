@@ -20,7 +20,10 @@ public class ReproduceWithLightweightSessionsTests : IDisposable
             options.AutoCreateSchemaObjects = AutoCreate.All;
             options.Schema.For<Aggregate>();
             options.UseDefaultSerialization(nonPublicMembersStorage: NonPublicMembersStorage.NonPublicSetters);
-        }).UseLightweightSessions();
+            })
+                                                                                  //***********************
+            .UseLightweightSessions();                                            // UseLightweightSessions
+                                                                                  //***********************
         _provider = services.BuildServiceProvider();        
     }
 
