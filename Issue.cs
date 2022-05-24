@@ -100,7 +100,7 @@ public class ReproduceInconsistantBehaviour : IDisposable
 
     public class Aggregate
     {
-        private readonly List<ValueObject> _list = new List<ValueObject>();
+        private List<ValueObject> _list = new List<ValueObject>();
 
         public Guid Id { get; }
 
