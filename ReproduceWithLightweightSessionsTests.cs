@@ -5,11 +5,12 @@ using Weasel.Core;
 using Xunit;
 
 namespace Issue;
-public class ReproduceInconsistantBehaviour : IDisposable
+
+public class ReproduceWithLightweightSessionsTests : IDisposable
 {
     private readonly ServiceProvider _provider;
 
-    public ReproduceInconsistantBehaviour()
+    public ReproduceWithLightweightSessionsTests()
     {
         var connectionString = "host=localhost;database=postgres;password=postgres;username=postgres";
         var services = new ServiceCollection();
@@ -19,13 +20,12 @@ public class ReproduceInconsistantBehaviour : IDisposable
             options.AutoCreateSchemaObjects = AutoCreate.All;
             options.Schema.For<Aggregate>();
             options.UseDefaultSerialization(nonPublicMembersStorage: NonPublicMembersStorage.NonPublicSetters);
-        });
+        }).UseLightweightSessions();
         _provider = services.BuildServiceProvider();        
     }
-    
 
     [Fact]
-    public void Value_added_to_aggregate_found_in_list_when_using_root_provider() // This tests passes
+    public void Value_added_to_aggregate_found_in_list_when_using_root_provider()  // This tests fails
     {
         // arrange
         var id = Guid.NewGuid();
